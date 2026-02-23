@@ -36,6 +36,25 @@ function calculateAHP(answers) {
     let CI = (lambdaMax - n) / (n - 1);
     let CR = (n > 2) ? CI / RI[n] : 0;
 
+    let worstPair = null;
+    let maxDeviation = 0;
+
+    if (CR > 0.1) {
+        for (let i = 0; i < n; i++) {
+            for (let j = i + 1; j < n; j++) {
+                let actualVal = mat[i][j]; 
+                let expectedVal = weights[i] / weights[j]; 
+                
+                let deviation = Math.max(actualVal / expectedVal, expectedVal / actualVal);
+                
+                if (deviation > maxDeviation) {
+                    maxDeviation = deviation;
+                    worstPair = { critA: CRITERIA[i], critB: CRITERIA[j] };
+                }
+            }
+        }
+    }
+
     const namedWeights = {};
     CRITERIA.forEach((name, i) => {
         namedWeights[name] = weights[i];
@@ -44,7 +63,8 @@ function calculateAHP(answers) {
     return {
         weights: namedWeights,
         CR: CR,
-        isConsistent: CR < 0.1
+        isConsistent: CR < 0.1,
+        worstPair: worstPair
     };
 }
 

@@ -5,32 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Framework Entscheidungshilfe</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <main class="container">
-        <section id="landing-page" style="text-align: center;">
-            <h1>Web Framework Selector</h1>
-            <p style="color: #555; margin-bottom: 30px; line-height: 1.5;">
-                Finde die optimale Architektur für dein Webprojekt.<br>
-                Beantworte 15 kurze Fragen zu deinen Prioritäten, und unser AHP-Modell berechnet die perfekte Framework-Empfehlung für dich.
+        <section id="landing-page">
+            <h1 class="hero-title">Web Framework Selector</h1>
+            
+            <div class="hero-visual">
+                <svg viewBox="0 0 400 320" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="6" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                        <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="8" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+
+                    <!-- Hexagon-Raster -->
+                    <g class="svg-grid">
+                        <polygon points="200,60 286.6,110 286.6,210 200,260 113.4,210 113.4,110" />
+                        <polygon points="200,85 265,122.5 265,197.5 200,235 135,197.5 135,122.5" />
+                        <polygon points="200,110 243.3,135 243.3,185 200,210 156.7,185 156.7,135" />
+                        <polygon points="200,135 221.6,147.5 221.6,172.5 200,185 178.4,172.5 178.4,147.5" />
+                        <!-- Speichen -->
+                        <line x1="200" y1="160" x2="200" y2="60" />
+                        <line x1="200" y1="160" x2="286.6" y2="110" />
+                        <line x1="200" y1="160" x2="286.6" y2="210" />
+                        <line x1="200" y1="160" x2="200" y2="260" />
+                        <line x1="200" y1="160" x2="113.4" y2="210" />
+                        <line x1="200" y1="160" x2="113.4" y2="110" />
+                    </g>
+
+                    <!-- Achsenbeschriftungen -->
+                    <g class="svg-labels">
+                        <text x="200" y="45" text-anchor="middle">Performance</text>
+                        <text x="295" y="115" text-anchor="start">Energie</text>
+                        <text x="295" y="215" text-anchor="start">Wartbarkeit</text>
+                        <text x="200" y="280" text-anchor="middle">Langlebigkeit</text>
+                        <text x="105" y="215" text-anchor="end">Team</text>
+                        <text x="105" y="115" text-anchor="end">Produktivität</text>
+                    </g>
+
+                    <!-- Datenflächen -->
+                    <polygon class="poly-blue" points="200,110 280,115 260,205 200,200 165,180 160,130" filter="url(#glow-blue)" />
+                    <polygon class="poly-green" points="200,80 275,120 245,200 200,240 140,195 125,120" filter="url(#glow-green)" />
+                    
+                    <!-- Datenpunkte -->
+                    <g class="svg-dots">
+                        <circle cx="200" cy="80"  r="4"/>
+                        <circle cx="275" cy="120" r="4"/>
+                        <circle cx="245" cy="200" r="4"/>
+                        <circle cx="200" cy="240" r="4"/>
+                        <circle cx="140" cy="195" r="4"/>
+                        <circle cx="125" cy="120" r="4"/>
+                    </g>
+                </svg>
+            </div>
+
+            <p class="hero-description">
+                Finde die optimale Architektur für dein Webprojekt. Basierend auf deinen Prioritäten berechnet das Modell die wissenschaftlich beste Framework-Empfehlung für dich.
             </p>
-            <button onclick="startApp()" class="btn primary" style="font-size: 1.1em; padding: 12px 30px;">
-                Fragebogen starten (15 Fragen)
+
+            <h2 class="how-it-works-title">Wie es funktioniert</h2>
+            
+            <div class="how-it-works">
+                <div class="step-card">
+                    <div class="icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3>1. Präferenzen (AHP)</h3>
+                    <p>Durch 15 gezielte Vergleiche wird deine individuelle Gewichtung für 6 Kriterien ermittelt.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        </svg>
+                    </div>
+                    <h3>2. Literatur-Daten</h3>
+                    <p>Im Hintergrund der Auswertung liegen fundierte wissenschaftliche Literaturwerte zu Frameworks.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="icon-container">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
+                    <h3>3. Ideale Wahl (TOPSIS)</h3>
+                    <p>Der Algorithmus berechnet mathematisch die Distanz deiner Wünsche zum Ideal-Framework.</p>
+                </div>
+            </div>
+
+            <button onclick="startApp()" class="btn primary btn-large btn-cta">
+                Fragebogen starten
             </button>
         </section>
 
         <section id="questionnaire" class="hidden">
             <h2 id="mode-title">Prioritäten-Analyse</h2>
-            <div id="questions-container">
-                </div>
+            <div id="questions-container"></div>
             <button onclick="submitAnswers()" class="btn success">Auswertung berechnen</button>
         </section>
 
         <section id="results" class="hidden">
             <h2>Dein Ergebnis</h2>
+            
             <div id="result-output"></div>
-            <button onclick="location.reload()" class="btn" style="margin-top: 20px;">Neuen Test starten</button>
+            
+            <button onclick="location.reload()" class="btn secondary btn-restart">Neuen Test starten</button>
         </section>
     </main>
 
